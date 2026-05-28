@@ -47,7 +47,8 @@ module.exports = {
         polygonAmoy: {
             url: process.env.RPC_URL || "",
             accounts:
-                process.env.PRIVATE_KEY !== undefined
+                process.env.PRIVATE_KEY &&
+                process.env.PRIVATE_KEY.length === 64
                     ? [process.env.PRIVATE_KEY]
                     : [],
             chainId: 80002

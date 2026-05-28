@@ -19,7 +19,7 @@ pragma solidity ^0.8.20;
  */
 
  import "@openzeppelin/contracts/access/Ownable.sol";
- import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
  contract AidStream is Ownable, ReentrancyGuard {
     // STRUCTS
@@ -136,6 +136,7 @@ pragma solidity ^0.8.20;
             goalAmount: _goalAmount,
             donatedAmount: 0,
             verified: false,
+            fundsReleased: false,
             active: true,
             createdAt: block.timestamp
         });
