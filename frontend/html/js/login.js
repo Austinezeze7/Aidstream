@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
       if (data.status === "success") {
         localStorage.setItem("user", email);
-        window.location.href = "/donate.html";
+        window.location.href = "cases.html";
       } else {
         alert(data.message || "Login failed");
       }
