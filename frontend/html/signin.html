@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication - AidStream</title>
+    <!-- Combined CSS styles or you can link your existing layouts -->
+    <link rel="stylesheet" href="../css/signin.css">
+    <style>
+        /* Essential layout extensions for the toggle system */
+        .auth-tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #718096;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+        .tab-btn.active {
+            color: #1DB954;
+            border-bottom-color: #1DB950;
+        }
+        .auth-form-toggle {
+            display: none;
+        }
+        .auth-form-toggle.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="navbar-placeholder"></div>
+
+    <main class="auth-container">
+        <div class="auth-card">
+            
+            <!-- Branding Header -->
+            <div class="auth-header">
+                <h2 id="auth-title">Welcome to AidStream</h2>
+                <p id="auth-subtitle">Join AidStream to start supporting or receiving aid</p>
+            </div>
+
+            <!-- Interactive Tab Navigation Slider -->
+            <div class="auth-tabs">
+                <button class="tab-btn active" onclick="switchTab('login')">Log In</button>
+                <button class="tab-btn" onclick="switchTab('log in')">Create Account</button>
+            </div>
+
+            <!-- Login Form Wrapper Component -->
+            <div id="loginSection" class="auth-form-toggle active">
+                <form id="loginForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="loginEmail">Email Address</label>
+                        <input type="email" id="loginEmail" required placeholder="name@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn-signup" style="margin-top: 15px;">Login</button>
+                </form>
+                <div class="auth-footer">
+                    <p>New to the platform? <a href="#" class="form-link-highlight" onclick="switchTab('signup')">Create an account</a></p>
+                </div>
+            </div>
+
+            <!-- Sign Up Form Wrapper Component -->
+            <div id="signUpSection" class="auth-form-toggle">
+                <form id="signUpForm" class="auth-form">
+                    
+                    <!-- Name Grid Structure -->
+                    <div class="name-grid">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="middleName">Middle Name <span class="optional">(Optional)</span></label>
+                            <input type="text" id="middleName" name="middleName">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="form-group">
+                        <label for="signUpEmail">Email Address</label>
+                        <input type="email" id="signUpEmail" name="email" placeholder="name@example.com" required>
+                    </div>
+
+                    <!-- Password Split Row -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="signUpPassword">Password</label>
+                            <input type="password" id="signUpPassword" name="password" placeholder="••••••••" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="••••••••" required>
+                        </div>
+                    </div>
+
+                    <!-- Account Type Dynamic Radio Selection -->
+                    <div class="form-group">
+                        <label class="section-label">Select Account Type</label>
+                        <div class="role-selection-wrapper">
+                            
+                            <label class="role-option-card">
+                                <input type="radio" name="accountType" value="contributor" checked>
+                                <div class="role-card-content">
+                                    <span class="role-title">Contributor</span>
+                                    <span class="role-description">I want to fund relief efforts</span>
+                                </div>
+                            </label>
+
+                            <label class="role-option-card">
+                                <input type="radio" name="accountType" value="beneficiary">
+                                <div class="role-card-content">
+                                    <span class="role-title">Beneficiary</span>
+                                    <span class="role-description">I need support or aid relief</span>
+                                </div>
+                            </label>
+
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-signup">Register Account</button>
+                </form>
+
+                <!-- Footer Links -->
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="#" class="form-link-highlight" onclick="switchTab('login')">Sign In</a></p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- Active Interface Tab Router Script -->
+    <script>
+        function switchTab(mode) {
+            // Document elements target cache
+            const loginSection = document.getElementById('loginSection');
+            const signUpSection = document.getElementById('signUpSection');
+            const title = document.getElementById('auth-title');
+            const subtitle = document.getElementById('auth-subtitle');
+            const buttons = document.querySelectorAll('.tab-btn');
+
+            // Reset tab highlights
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            if (mode === 'login') {
+                // Visibility configurations
+                loginSection.classList.add('active');
+                signUpSection.classList.remove('active');
+                buttons[0].classList.add('active');
+                
+                // Content updates
+                title.textContent = "Sign In";
+                subtitle.textContent = "Access your dashboard to manage aid streams";
+            } else {
+                // Visibility configurations
+                signUpSection.classList.add('active');
+                loginSection.classList.remove('active');
+                buttons[1].classList.add('active');
+                
+                // Content updates
+                title.textContent = "Create Account";
+                subtitle.textContent = "Join AidStream to start supporting or receiving aid";
+            }
+        }
+    </script>
+
+    <!-- Project Architecture Base Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/wallet.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
