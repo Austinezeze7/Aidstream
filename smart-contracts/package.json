@@ -1,0 +1,38 @@
+{
+    "name": "aidstream-smart-contracts",
+    "version": "1.0.0",
+    "description": "Blockchain smart contracts for the AidStream transparent aid distribution platform.",
+    "main": "index.js",
+    "scripts": {
+        "compile": "hardhat compile",
+        "test": "hardhat test",
+        "clean": "hardhat clean",
+        "node": "hardhat node",
+        "deploy:local": "hardhat run scripts/deploy.js",
+        "deploy:amoy": "hardhat run scripts/deploy.js --network polygonAmoy",
+        "ignition:deploy": "hardhat ignition deploy ignition/modules/AidStreamModule.js",
+        "coverage": "hardhat coverage"
+    },
+    "keywords": [
+        "blockchain",
+        "solidity",
+        "hardhat",
+        "polygon",
+        "ethereum",
+        "smart-contracts",
+        "aidstream",
+        "defi",
+        "web3"
+    ],
+    "author": "AidStream Team",
+    "license": "MIT",
+    "devDependencies": {
+        "@nomicfoundation/hardhat-ignition": "^0.15.5",
+        "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+        "dotenv": "^16.4.5",
+        "hardhat": "^2.22.10"
+    },
+    "dependencies": {
+        "@openzeppelin/contracts": "^5.0.2"
+    }
+}
