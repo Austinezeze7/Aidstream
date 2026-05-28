@@ -1,0 +1,53 @@
+<main class="donate-container">
+    <!-- Left Column: Campaign Details & Info -->
+    <section class="campaign-card">
+        <link rel="stylesheet" href="../css/donate.css">
+         <link rel="stylesheet" href="css/responsive.css">
+        <h1>Change a Life Today</h1>
+        <p> Your donation directly supports a verified beneficiary.
+    Funds are allocated to critical needs such as medical treatment,
+    school fees, housing support, or emergency relief depending on the case.</p>
+        
+        <div class="progress-container">
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill"></div>
+            </div>
+            <div class="progress-stats">
+                <span class="raised">kSHS 6,500 Raised</span>
+                <span class="goal">Goal: kSHS 10,000</span>
+            </div>
+        </div>
+
+        <div class="trust-badges">
+            <div>🛡️ <span>Secure Payment</span></div>
+            <div>🤝 <span>Direct Impact</span></div>
+            <div>📋 <span>Transparent Tracking</span></div>
+        </div>
+    </section>
+
+    <!-- Right Column: Interactive Payment Form -->
+    <section class="donate-form-card">
+        <h2>Select Donation Amount</h2>
+        <form id="donationForm">
+            <div class="form-group">
+                
+            <div class="form-group">
+                <label for="customAmount">Custom Amount</label>
+                <div class="custom-amount-wrapper">
+                    <span class="currency-symbol"> </span>
+                    <input type="number" id="customAmount" placeholder="Amount" min="1">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="paymentMethod">Payment Method</label>
+                <select id="paymentMethod">
+                    <option value="wallet">Paypal</option>
+                    <option value="card">Mpesa </option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-donate">Complete Donation</button>
+        </form>
+    </section>
+</main>
