@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AidStream Admin Dashboard</title>
+
+  <link rel="stylesheet" href="../css/admin.css">
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+
+    <div class="logo">
+      <i class="fa-solid fa-heart-circle-check"></i>
+      <h2>AidStream</h2>
+    </div>
+
+    <ul class="nav-links">
+      <li class="active">
+        <i class="fa-solid fa-chart-line"></i>
+        Dashboard
+      </li>
+
+      <li>
+        <i class="fa-solid fa-user-check"></i>
+        Verifications
+      </li>
+
+      <li>
+        <i class="fa-solid fa-hand-holding-dollar"></i>
+        Donations
+      </li>
+
+      <li>
+        <i class="fa-solid fa-wallet"></i>
+        Disbursements
+      </li>
+
+      <li>
+        <i class="fa-solid fa-users"></i>
+        Beneficiaries
+      </li>
+
+      <li>
+        <i class="fa-solid fa-gear"></i>
+        Settings
+      </li>
+    </ul>
+
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- Top Navbar -->
+    <header class="topbar">
+
+      <div>
+        <h1>Admin Dashboard</h1>
+        <p>Manage cases, verifications and disbursements.</p>
+      </div>
+
+      <div class="admin-profile">
+        <img src="https://i.pravatar.cc/40" alt="">
+        <span>Admin</span>
+      </div>
+
+    </header>
+
+    <!-- Stats -->
+    <section class="stats-grid">
+
+      <div class="stat-card">
+        <div class="icon yellow">
+          <i class="fa-solid fa-shield"></i>
+        </div>
+
+        <div>
+          <h2>12</h2>
+          <p>Pending Verifications</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="icon blue">
+          <i class="fa-solid fa-wallet"></i>
+        </div>
+
+        <div>
+          <h2>8</h2>
+          <p>Pending Disbursements</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="icon green">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+        <div>
+          <h2>56</h2>
+          <p>Active Cases</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="icon purple">
+          <i class="fa-solid fa-users"></i>
+        </div>
+
+        <div>
+          <h2>28</h2>
+          <p>Completed Cases</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Pending Verifications -->
+    <section class="dashboard-section">
+
+      <div class="section-header">
+        <h2>Pending Verifications</h2>
+        <a href="#">View All</a>
+      </div>
+
+      <div class="verification-list">
+
+        <div class="verification-card">
+
+          <div class="user-info">
+            <img src="https://i.pravatar.cc/50?img=11" alt="">
+
+            <div>
+              <h3>Jane Doe</h3>
+              <p>Medical Assistance</p>
+            </div>
+          </div>
+
+          <div class="time">
+            Submitted 2 hours ago
+          </div>
+
+          <div class="actions">
+            <button class="review-btn">Review</button>
+            <button class="reject-btn">Reject</button>
+          </div>
+
+        </div>
+
+        <div class="verification-card">
+
+          <div class="user-info">
+            <img src="https://i.pravatar.cc/50?img=12" alt="">
+
+            <div>
+              <h3>Peter Okello</h3>
+              <p>School Fees Support</p>
+            </div>
+          </div>
+
+          <div class="time">
+            Submitted 4 hours ago
+          </div>
+
+          <div class="actions">
+            <button class="review-btn">Review</button>
+            <button class="reject-btn">Reject</button>
+          </div>
+
+        </div>
+
+        <div class="verification-card">
+
+          <div class="user-info">
+            <img src="https://i.pravatar.cc/50?img=13" alt="">
+
+            <div>
+              <h3>Grace Akinyi</h3>
+              <p>Emergency Shelter</p>
+            </div>
+          </div>
+
+          <div class="time">
+            Submitted 6 hours ago
+          </div>
+
+          <div class="actions">
+            <button class="review-btn">Review</button>
+            <button class="reject-btn">Reject</button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Recent Disbursements -->
+    <section class="dashboard-section">
+
+      <div class="section-header">
+        <h2>Recent Disbursements</h2>
+        <a href="#">View All</a>
+      </div>
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Beneficiary</th>
+            <th>Purpose</th>
+            <th>Amount</th>
+            <th>Transaction Hash</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td>Mercy Achieng</td>
+            <td>School Fees</td>
+            <td>$560</td>
+            <td>0x7b3b...9c2d</td>
+            <td>
+              <span class="success">
+                <i class="fa-solid fa-circle-check"></i>
+              </span>
+            </td>
+          </tr>
+
+          <tr>
+            <td>John Otieno</td>
+            <td>Surgery</td>
+            <td>$1200</td>
+            <td>0x8e2a...1f3d</td>
+            <td>
+              <span class="success">
+                <i class="fa-solid fa-circle-check"></i>
+              </span>
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </section>
+
+  </main>
+
+</body>
+</html>
