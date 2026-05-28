@@ -19,6 +19,7 @@
 const hre = require("hardhat");
 
 async function main() {
+
     console.log("================================================");
     console.log("🚀 Starting AidStream Contract Deployment...");
     console.log("================================================\n");
@@ -36,11 +37,13 @@ async function main() {
 
     console.log(
         "Account balance:",
-        hre.ethers.utils.formatEther(balance),
+        hre.ethers.formatEther(balance),
         "ETH\n"
     );
 
+    // =====================================================
     // DEPLOY AIDSTREAM CONTRACT
+    // =====================================================
 
     console.log("📦 Deploying AidStream contract...");
 
@@ -60,7 +63,9 @@ async function main() {
         "\n"
     );
 
+    // =====================================================
     // DEPLOY ESCROW CONTRACT
+    // =====================================================
 
     console.log("📦 Deploying Escrow contract...");
 
@@ -75,21 +80,29 @@ async function main() {
     const escrowAddress = await escrow.getAddress();
 
     console.log(
-        "✅ Escrow deployed to:",
+        "✅ Escrow deployed at:",
         escrowAddress,
         "\n"
     );
 
+    // =====================================================
     // DEPLOY VERIFICATION REGISTRY
+    // =====================================================
 
-    console.log("📦 Deploying VerificationRegistry contract..."
-    );
+    console.log("📦 Deploying VerificationRegistry contract...");
 
-    const VerificationRegistry = await VerificationRegistry.deploy();
+    const VerificationRegistry =
+        await hre.ethers.getContractFactory(
+            "VerificationRegistry"
+        );
 
-    await VerificationRegistry.waitForDeployment();
+    const verificationRegistry =
+        await VerificationRegistry.deploy();
 
-    const verificationRegistryAddress = await verificationRegistry.getAddress();
+    await verificationRegistry.waitForDeployment();
+
+    const verificationRegistryAddress =
+        await verificationRegistry.getAddress();
 
     console.log(
         "✅ VerificationRegistry deployed at:",
@@ -97,23 +110,19 @@ async function main() {
         "\n"
     );
 
+    // =====================================================
     // DEPLOYMENT SUMMARY
-    
+    // =====================================================
+
     console.log("================================================");
     console.log("🎉 DEPLOYMENT SUCCESSFUL");
     console.log("================================================\n");
 
     console.log("📌 Contract Addresses:\n");
 
-    console.log(
-        "AidStream:",
-        aidStreamAddress
-    );
+    console.log("AidStream:", aidStreamAddress);
 
-    console.log(
-        "Escrow:",
-        escrowAddress
-    );
+    console.log("Escrow:", escrowAddress);
 
     console.log(
         "VerificationRegistry:",
@@ -128,7 +137,6 @@ async function main() {
 main().catch((error) => {
 
     console.error("❌ Deployment failed:", error);
-    console.log(error);
 
     process.exitCode = 1;
 });
