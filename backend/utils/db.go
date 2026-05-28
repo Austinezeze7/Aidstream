@@ -30,3 +30,30 @@ func ConnectDB() error {
     fmt.Println("Connected to database successfully")
     return nil
 }
+func CreateUser(firstName, middleName, lastName, email, password, role, walletAddress string) error {
+	_, err := DB.Exec(context.Background(),
+		`INSERT INTO users (
+			email,
+			role,
+			wallet_address,
+			first_name,
+			middle_name,
+			last_name,
+			password
+		)
+		VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+		email,
+		role,
+		walletAddress,
+		firstName,
+		middleName,
+		lastName,
+		password,
+	)
+
+	if err != nil {
+		return fmt.Errorf("insert failed: %v", err)
+	}
+
+	return nil
+}
