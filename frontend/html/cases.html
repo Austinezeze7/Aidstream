@@ -2,824 +2,237 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cases - AidStream</title>
-
     <link rel="stylesheet" href="../css/case.css">
-
     <style>
-
-        /* ========================= */
-        /* CARD ACTION BUTTONS */
-        /* ========================= */
-
-        .card-actions{
-            display:flex;
-            gap:12px;
-            margin-top:18px;
+        .card-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
         }
-
-        .card-actions a{
-            flex:1;
-            text-align:center;
+        .card-actions a {
+            flex: 1;
+            text-align: center;
         }
-
-        /* VIEW BUTTON */
-
-        .btn-action{
-            padding:12px;
-            border-radius:10px;
-            text-decoration:none;
-            font-weight:600;
-            color:rgb(32, 229, 29);
-            transition:0.3s ease;
-            display:inline-block;
+        .btn-action {
+            padding: 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            color: rgb(32, 229, 29);
+            transition: 0.3s ease;
+            display: inline-block;
         }
-
-        .btn-action:hover{
-            transform:translateY(-2px);
+        .btn-action:hover {
+            transform: translateY(-2px);
         }
-
-        /* DONATE BUTTON */
-
-        .btn-donate{
-            padding:12px;
-            border-radius:10px;
-            background:#16a34a;
-            color:white;
-            text-decoration:none;
-            font-weight:600;
-            transition:0.3s ease;
-            display:inline-block;
+        .btn-donate {
+            padding: 12px;
+            border-radius: 10px;
+            background: #16a34a;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s ease;
+            display: inline-block;
         }
-
-        .btn-donate:hover{
-            background:#15803d;
-            transform:translateY(-2px);
+        .btn-donate:hover {
+            background: #15803d;
+            transform: translateY(-2px);
         }
-
     </style>
-
 </head>
-
 <body>
 
     <!-- ========================= -->
-    <!-- HEADER NAVIGATION -->
+    <!-- HEADER NAVIGATION        -->
     <!-- ========================= -->
-
     <header class="navbar">
-
         <div class="nav-container">
-
             <div class="logo">
-
                 <span class="logo-icon">💚</span>
-
-                <span class="logo-text">
-                    AidStream
-                </span>
-
+                <span class="logo-text">AidStream</span>
             </div>
-
             <nav class="nav-links">
-
-                <a href="index.html">
-                    Home
-                </a>
-
-                <a href="about.html">
-                    About
-                </a>
-
-                <a
-                    href="cases.html"
-                    class="active"
-                >
-                    Cases
-                </a>
-
-                <a href="contact.html">
-                    Contact
-                </a>
-
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="cases.html" class="active">Cases</a>
+                <a href="contact.html">Contact</a>
             </nav>
-
             <div class="nav-actions">
-
-                <a
-                    href="cases.html"
-                    class="btn-wallet"
-                >
-                    Support Cases
-                </a>
-
+                <a href="cases.html" class="btn-wallet">Support Cases</a>
             </div>
-
         </div>
-
     </header>
 
     <!-- ========================= -->
-    <!-- MAIN CONTENT -->
+    <!-- MAIN CONTENT             -->
     <!-- ========================= -->
-
     <main class="main-content">
 
-        <!-- PAGE INTRO -->
-
         <section class="page-intro">
-
             <h1>All Cases</h1>
-
-            <p>
-                Browse verified cases and support
-                those in need.
-            </p>
-
+            <p>Browse verified cases and support those in need.</p>
         </section>
 
         <!-- ========================= -->
-        <!-- FILTERS + SEARCH -->
+        <!-- FILTERS + SEARCH         -->
         <!-- ========================= -->
-
         <section class="controls-toolbar">
-
-            <!-- FILTER BUTTONS -->
-
             <div class="filter-group">
-
-                <button
-                    class="filter-tag active"
-                    data-filter="all"
-                >
-                    All
-                </button>
-
-                <button
-                    class="filter-tag"
-                    data-filter="medical"
-                >
-                    Medical
-                </button>
-
-                <button
-                    class="filter-tag"
-                    data-filter="education"
-                >
-                    Education
-                </button>
-
-                <button
-                    class="filter-tag"
-                    data-filter="housing"
-                >
-                    Housing
-                </button>
-
-                <button
-                    class="filter-tag"
-                    data-filter="emergency"
-                >
-                    Emergency
-                </button>
-
+                <button class="filter-tag active" data-filter="all">All</button>
+                <button class="filter-tag" data-filter="Medical">Medical</button>
+                <button class="filter-tag" data-filter="Education">Education</button>
+                <button class="filter-tag" data-filter="Housing">Housing</button>
+                <button class="filter-tag" data-filter="Emergency">Emergency</button>
             </div>
-
-            <!-- SEARCH BAR -->
-
             <div class="search-box-wrapper">
-
-                <span class="search-icon">
-                    🔍
-                </span>
-
+                <span class="search-icon">🔍</span>
                 <input
                     type="text"
                     id="searchInput"
                     class="search-input"
                     placeholder="Search cases..."
                 >
-
             </div>
-
         </section>
 
         <!-- ========================= -->
-        <!-- CASES GRID -->
+        <!-- CASES GRID               -->
         <!-- ========================= -->
-
-        <section class="cases-display-grid">
-
-            <!-- ========================= -->
-            <!-- CASE 1 -->
-            <!-- ========================= -->
-
-            <article
-                class="case-card"
-                data-category="medical"
-            >
-
-                <div class="card-media-wrapper">
-
-                    <div class="card-image-placeholder img-bg-boy-1"></div>
-
-                    <span class="category-badge badge-medical">
-                        Medical
-                    </span>
-
-                </div>
-
-                <div class="card-details-panel">
-
-                    <h2 class="recipient-name">
-                        John Otieno
-                    </h2>
-
-                    <p class="case-description">
-                        Surgery for heart condition
-                    </p>
-
-                    <div class="financial-metric">
-
-                        <span class="currency-value">
-                            Kshs 120,000
-                        </span>
-
-                        <span class="metric-label">
-                            needed
-                        </span>
-
-                    </div>
-
-                    <div class="progress-module">
-
-                        <div class="bar-track">
-
-                            <div
-                                class="bar-fill medical-fill"
-                                style="width:65%;"
-                            ></div>
-
-                        </div>
-
-                        <span class="percentage-label">
-                            65%
-                        </span>
-
-                    </div>
-
-                    <div class="card-actions">
-
-                        <a
-                            href="case-details.html?id=1"
-                            class="btn-action action-medical"
-                        >
-                            View Case
-                        </a>
-
-                        <a
-                            href="donate.html?id=1"
-                            class="btn-donate"
-                        >
-                            Donate Now
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </article>
-
-            <!-- ========================= -->
-            <!-- CASE 2 -->
-            <!-- ========================= -->
-
-            <article
-                class="case-card"
-                data-category="education"
-            >
-
-                <div class="card-media-wrapper">
-
-                    <div class="card-image-placeholder img-bg-girl-1"></div>
-
-                    <span class="category-badge badge-education">
-                        Education
-                    </span>
-
-                </div>
-
-                <div class="card-details-panel">
-
-                    <h2 class="recipient-name">
-                        Mercy Achieng
-                    </h2>
-
-                    <p class="case-description">
-                        School fees for university
-                    </p>
-
-                    <div class="financial-metric">
-
-                        <span class="currency-value">
-                            Kshs 900,000
-                        </span>
-
-                        <span class="metric-label">
-                            needed
-                        </span>
-
-                    </div>
-
-                    <div class="progress-module">
-
-                        <div class="bar-track">
-
-                            <div
-                                class="bar-fill education-fill"
-                                style="width:70%;"
-                            ></div>
-
-                        </div>
-
-                        <span class="percentage-label">
-                            70%
-                        </span>
-
-                    </div>
-
-                    <div class="card-actions">
-
-                        <a
-                            href="case-details.html?id=2"
-                            class="btn-action action-education"
-                        >
-                            View Case
-                        </a>
-
-                        <a
-                            href="donate.html?id=2"
-                            class="btn-donate"
-                        >
-                            Donate Now
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </article>
-
-            <!-- ========================= -->
-            <!-- CASE 3 -->
-            <!-- ========================= -->
-
-            <article
-                class="case-card"
-                data-category="emergency"
-            >
-
-                <div class="card-media-wrapper">
-
-                    <div class="card-image-placeholder img-bg-house-1"></div>
-
-                    <span class="category-badge badge-emergency">
-                        Emergency
-                    </span>
-
-                </div>
-
-                <div class="card-details-panel">
-
-                    <h2 class="recipient-name">
-                        Fire Victim Family
-                    </h2>
-
-                    <p class="case-description">
-                        Rebuilding after fire incident
-                    </p>
-
-                    <div class="financial-metric">
-
-                        <span class="currency-value">
-                            Kshs 255,500
-                        </span>
-
-                        <span class="metric-label">
-                            needed
-                        </span>
-
-                    </div>
-
-                    <div class="progress-module">
-
-                        <div class="bar-track">
-
-                            <div
-                                class="bar-fill emergency-fill"
-                                style="width:88%;"
-                            ></div>
-
-                        </div>
-
-                        <span class="percentage-label">
-                            88%
-                        </span>
-
-                    </div>
-
-                    <div class="card-actions">
-
-                        <a
-                            href="case-details.html?id=3"
-                            class="btn-action action-emergency"
-                        >
-                            View Case
-                        </a>
-
-                        <a
-                            href="donate.html?id=3"
-                            class="btn-donate"
-                        >
-                            Donate Now
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </article>
-
-            <!-- ========================= -->
-            <!-- CASE 4 -->
-            <!-- ========================= -->
-
-            <article
-                class="case-card"
-                data-category="education"
-            >
-
-                <div class="card-media-wrapper">
-
-                    <div class="card-image-placeholder img-bg-boy-2"></div>
-
-                    <span class="category-badge badge-education">
-                        Education
-                    </span>
-
-                </div>
-
-                <div class="card-details-panel">
-
-                    <h2 class="recipient-name">
-                        Brian Okello
-                    </h2>
-
-                    <p class="case-description">
-                        Laptop for studies
-                    </p>
-
-                    <div class="financial-metric">
-
-                        <span class="currency-value">
-                            Kshs 450,000
-                        </span>
-
-                        <span class="metric-label">
-                            needed
-                        </span>
-
-                    </div>
-
-                    <div class="progress-module">
-
-                        <div class="bar-track">
-
-                            <div
-                                class="bar-fill education-fill"
-                                style="width:45%;"
-                            ></div>
-
-                        </div>
-
-                        <span class="percentage-label">
-                            45%
-                        </span>
-
-                    </div>
-
-                    <div class="card-actions">
-
-                        <a
-                            href="case-details.html?id=4"
-                            class="btn-action action-education"
-                        >
-                            View Case
-                        </a>
-
-                        <a
-                            href="donate.html?id=4"
-                            class="btn-donate"
-                        >
-                            Donate Now
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </article>
-
-            <!-- ========================= -->
-            <!-- CASE 5 -->
-            <!-- ========================= -->
-
-            <article
-                class="case-card"
-                data-category="medical"
-            >
-
-                <div class="card-media-wrapper">
-
-                    <div class="card-image-placeholder img-bg-baby-1"></div>
-
-                    <span class="category-badge badge-medical">
-                        Medical
-                    </span>
-
-                </div>
-
-                <div class="card-details-panel">
-
-                    <h2 class="recipient-name">
-                        Baby Faith
-                    </h2>
-
-                    <p class="case-description">
-                        Treatment for pneumonia
-                    </p>
-
-                    <div class="financial-metric">
-
-                        <span class="currency-value">
-                            Kshs 600,000
-                        </span>
-
-                        <span class="metric-label">
-                            needed
-                        </span>
-
-                    </div>
-
-                    <div class="progress-module">
-
-                        <div class="bar-track">
-
-                            <div
-                                class="bar-fill medical-fill"
-                                style="width:92%;"
-                            ></div>
-
-                        </div>
-
-                        <span class="percentage-label">
-                            92%
-                        </span>
-
-                    </div>
-
-                    <div class="card-actions">
-
-                        <a
-                            href="case-details.html?id=5"
-                            class="btn-action action-medical"
-                        >
-                            View Case
-                        </a>
-
-                        <a
-                            href="donate.html?id=5"
-                            class="btn-donate"
-                        >
-                            Donate Now
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </article>
-
-            <!-- ========================= -->
-            <!-- CASE 6 -->
-            <!-- ========================= -->
-
-            <article
-                class="case-card"
-                data-category="housing"
-            >
-
-                <div class="card-media-wrapper">
-
-                    <div class="card-image-placeholder img-bg-house-2"></div>
-
-                    <span class="category-badge badge-housing">
-                        Housing
-                    </span>
-
-                </div>
-
-                <div class="card-details-panel">
-
-                    <h2 class="recipient-name">
-                        Mary Wanjiku
-                    </h2>
-
-                    <p class="case-description">
-                        Need shelter support
-                    </p>
-
-                    <div class="financial-metric">
-
-                        <span class="currency-value">
-                            Kshs 30,000
-                        </span>
-
-                        <span class="metric-label">
-                            needed
-                        </span>
-
-                    </div>
-
-                    <div class="progress-module">
-
-                        <div class="bar-track">
-
-                            <div
-                                class="bar-fill housing-fill"
-                                style="width:30%;"
-                            ></div>
-
-                        </div>
-
-                        <span class="percentage-label">
-                            30%
-                        </span>
-
-                    </div>
-
-                    <div class="card-actions">
-
-                        <a
-                            href="case-details.html?id=6"
-                            class="btn-action action-housing"
-                        >
-                            View Case
-                        </a>
-
-                        <a
-                            href="donate.html?id=6"
-                            class="btn-donate"
-                        >
-                            Donate Now
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </article>
-
+        <section class="cases-display-grid" id="casesContainer">
+            <!-- Cards injected by loadCases() -->
         </section>
 
     </main>
 
-    <!-- ========================= -->
-    <!-- FILTER + SEARCH SCRIPT -->
-    <!-- ========================= -->
-
     <script>
+        // =========================
+        // CATEGORY STYLES
+        // Keys match DB exactly (Capital first letter)
+        // =========================
+        const categoryStyles = {
+            Medical:   { gradient: "linear-gradient(135deg, #fee2e2, #fca5a5)", icon: "🏥" },
+            Education: { gradient: "linear-gradient(135deg, #dbeafe, #93c5fd)", icon: "🎓" },
+            Housing:   { gradient: "linear-gradient(135deg, #fef9c3, #fde047)", icon: "🏠" },
+            Emergency: { gradient: "linear-gradient(135deg, #ffedd5, #fb923c)", icon: "🚨" },
+        };
+
+        const defaultStyle = { gradient: "linear-gradient(135deg, #dcfce7, #86efac)", icon: "💚" };
 
         // =========================
-        // ELEMENTS
+        // LOAD CASES FROM API
         // =========================
+        async function loadCases() {
+            try {
+                const res = await fetch("/api/cases");
+                const cases = await res.json();
 
-        const filterButtons =
-            document.querySelectorAll(".filter-tag");
+                const container = document.getElementById("casesContainer");
+                container.innerHTML = "";
 
-        const searchInput =
-            document.getElementById("searchInput");
-
-        const caseCards =
-            document.querySelectorAll(".case-card");
-
-        // =========================
-        // ACTIVE FILTER
-        // =========================
-
-        let activeFilter = "all";
-
-        // =========================
-        // FILTER FUNCTION
-        // =========================
-
-        function filterCases(){
-
-            const searchValue =
-                searchInput.value.toLowerCase();
-
-            caseCards.forEach(card => {
-
-                const category =
-                    card.dataset.category.toLowerCase();
-
-                const name =
-                    card.querySelector(".recipient-name")
-                    .textContent
-                    .toLowerCase();
-
-                const description =
-                    card.querySelector(".case-description")
-                    .textContent
-                    .toLowerCase();
-
-                // SEARCH CHECK
-
-                const matchesSearch =
-                    name.includes(searchValue) ||
-                    description.includes(searchValue);
-
-                // CATEGORY CHECK
-
-                const matchesCategory =
-                    activeFilter === "all" ||
-                    category === activeFilter;
-
-                // SHOW OR HIDE
-
-                if(matchesSearch && matchesCategory){
-
-                    card.style.display = "block";
-
-                }
-                else{
-
-                    card.style.display = "none";
-
+                if (!cases || cases.length === 0) {
+                    container.innerHTML = `<p style="text-align:center;color:#718096;padding:40px;">No active cases at the moment.</p>`;
+                    return;
                 }
 
-            });
+                cases.forEach(c => {
+                    const percent = c.target_amount > 0
+                        ? Math.min((c.amount_raised / c.target_amount) * 100, 100)
+                        : 0;
 
+                    // Keep original casing from DB e.g. "Medical", "Education"
+                    const category = c.category || "General";
+                    const style    = categoryStyles[category] || defaultStyle;
+
+                    container.innerHTML += `
+                    <article class="case-card" data-category="${category}">
+
+                        <div class="card-media-wrapper">
+                            <div class="card-image-placeholder"
+                                 style="background:${style.gradient};
+                                        display:flex;
+                                        align-items:center;
+                                        justify-content:center;
+                                        font-size:52px;">
+                                ${style.icon}
+                            </div>
+                            <span class="category-badge badge-${category.toLowerCase()}">
+                                ${category}
+                            </span>
+                        </div>
+
+                        <div class="card-details-panel">
+                            <h2 class="recipient-name">${c.title}</h2>
+                            <p class="case-description">${c.description}</p>
+
+                            <div class="financial-metric">
+                                <span class="currency-value">Kshs ${Number(c.target_amount).toLocaleString()}</span>
+                                <span class="metric-label">needed</span>
+                            </div>
+
+                            <div class="progress-module">
+                                <div class="bar-track">
+                                    <div class="bar-fill ${category.toLowerCase()}-fill"
+                                         style="width:${percent.toFixed(1)}%;">
+                                    </div>
+                                </div>
+                                <span class="percentage-label">${percent.toFixed(1)}%</span>
+                            </div>
+
+                            <div class="card-actions">
+                                <a href="case-details.html?id=${c.id}" class="btn-action action-${category.toLowerCase()}">View Case</a>
+                                <a href="donate.html?id=${c.id}" class="btn-donate">Donate Now</a>
+                            </div>
+                        </div>
+
+                    </article>
+                    `;
+                });
+
+                applyFilter(activeFilter);
+
+            } catch (err) {
+                console.error("Failed to load cases:", err);
+                document.getElementById("casesContainer").innerHTML =
+                    `<p style="text-align:center;color:red;padding:40px;">Failed to load cases. Please try again.</p>`;
+            }
         }
 
         // =========================
-        // FILTER BUTTON EVENTS
+        // FILTER + SEARCH LOGIC
         // =========================
+        let activeFilter = "all";
 
-        filterButtons.forEach(button => {
+        function applyFilter(filter) {
+            activeFilter = filter;
+            const cards  = document.querySelectorAll(".case-card");
+            const search = document.getElementById("searchInput").value.toLowerCase();
 
-            button.addEventListener("click", () => {
-
-                // REMOVE ACTIVE
-
-                filterButtons.forEach(btn => {
-
-                    btn.classList.remove("active");
-
-                });
-
-                // ADD ACTIVE
-
-                button.classList.add("active");
-
-                // UPDATE FILTER
-
-                activeFilter =
-                    button.dataset.filter;
-
-                // RUN FILTER
-
-                filterCases();
-
+            cards.forEach(card => {
+                const matchFilter = filter === "all" || card.dataset.category === filter;
+                const matchSearch = card.innerText.toLowerCase().includes(search);
+                card.style.display = matchFilter && matchSearch ? "" : "none";
             });
+        }
 
+        document.querySelectorAll(".filter-tag").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".filter-tag").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                applyFilter(btn.dataset.filter);
+            });
+        });
+
+        document.getElementById("searchInput").addEventListener("input", () => {
+            applyFilter(activeFilter);
         });
 
         // =========================
-        // SEARCH EVENT
+        // INIT
         // =========================
-
-        searchInput.addEventListener(
-            "input",
-            filterCases
-        );
-
+        loadCases();
     </script>
 
 </body>

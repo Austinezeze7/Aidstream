@@ -93,7 +93,7 @@ body {
 }
 
 .btn-login {
-    color: var(--text-white);
+    color: var(--primary-green);
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 600;
