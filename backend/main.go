@@ -82,25 +82,23 @@ func main() {
         return
     }
 
-   err := utils.CreateUser(
-    body.FirstName,
-    body.MiddleName,
-    body.LastName,
-    body.Email,
-    body.Password,
-    body.AccountType,
-    "",
-)
-if err != nil {
-    log.Println("CreateUser error:", err) // <-- ADD THIS
-    w.WriteHeader(http.StatusInternalServerError)
-    fmt.Fprintf(w, `{"status":"error","message":"%s"}`, err.Error()) // <-- show real error
-    return
-}
+    err := utils.CreateUser(
+        body.FirstName,
+        body.MiddleName,
+        body.LastName,
+        body.Email,
+        body.Password,  // ⚠️ hash this before storing — see note below
+        body.AccountType,
+        "",             // walletAddress — empty for now
+    )
+    if err != nil {
+        w.WriteHeader(http.StatusInternalServerError)
+        fmt.Fprintf(w, `{"status":"error","message":"Could not create user"}`)
+        return
+    }
 
     fmt.Fprint(w, `{"status":"success","message":"Account created"}`)
 })
-
 	// =========================
 	// DONATE ROUTE
 	// =========================
