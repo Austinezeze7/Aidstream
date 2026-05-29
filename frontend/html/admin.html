@@ -4,259 +4,492 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AidStream Admin Dashboard</title>
-
   <link rel="stylesheet" href="../css/admin.css">
-
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-  >
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .section-page { display: none; }
+    .section-page.active { display: block; }
+    .nav-links li { cursor: pointer; }
+    .nav-links li.active { color: #1DB954; }
+  </style>
 </head>
 
 <body>
 
-  <!-- Sidebar -->
+  <!-- ========================= -->
+  <!-- SIDEBAR                  -->
+  <!-- ========================= -->
   <aside class="sidebar">
-
     <div class="logo">
       <i class="fa-solid fa-heart-circle-check"></i>
       <h2>AidStream</h2>
     </div>
-
     <ul class="nav-links">
-      <li class="active">
-        <i class="fa-solid fa-chart-line"></i>
-        Dashboard
+      <li class="active" data-section="dashboard">
+        <i class="fa-solid fa-chart-line"></i> Dashboard
       </li>
-
-      <li>
-        <i class="fa-solid fa-user-check"></i>
-        Verifications
+      <li data-section="verifications">
+        <i class="fa-solid fa-user-check"></i> Verifications
       </li>
-
-      <li>
-        <i class="fa-solid fa-hand-holding-dollar"></i>
-        Donations
+      <li data-section="donations">
+        <i class="fa-solid fa-hand-holding-dollar"></i> Donations
       </li>
-
-      <li>
-        <i class="fa-solid fa-wallet"></i>
-        Disbursements
+      <li data-section="disbursements">
+        <i class="fa-solid fa-wallet"></i> Disbursements
       </li>
-
-      <li>
-        <i class="fa-solid fa-users"></i>
-        Beneficiaries
+      <li data-section="beneficiaries">
+        <i class="fa-solid fa-users"></i> Beneficiaries
       </li>
-
-      <li>
-        <i class="fa-solid fa-gear"></i>
-        Settings
+      <li data-section="settings">
+        <i class="fa-solid fa-gear"></i> Settings
       </li>
     </ul>
-
   </aside>
 
-  <!-- Main Content -->
+  <!-- ========================= -->
+  <!-- MAIN CONTENT             -->
+  <!-- ========================= -->
   <main class="main-content">
 
-    <!-- Top Navbar -->
+    <!-- Topbar -->
     <header class="topbar">
-
       <div>
-        <h1>Admin Dashboard</h1>
-        <p>Manage cases, verifications and disbursements.</p>
+        <h1 id="pageTitle">Admin Dashboard</h1>
+        <p id="pageSubtitle">Manage cases, verifications and disbursements.</p>
       </div>
-
       <div class="admin-profile">
         <img src="https://i.pravatar.cc/40" alt="">
-        <span>Admin</span>
+        <span id="adminName">Admin</span>
       </div>
-
     </header>
 
-    <!-- Stats -->
-    <section class="stats-grid">
+    <!-- ========================= -->
+    <!-- DASHBOARD SECTION        -->
+    <!-- ========================= -->
+    <div id="section-dashboard" class="section-page active">
 
-      <div class="stat-card">
-        <div class="icon yellow">
-          <i class="fa-solid fa-shield"></i>
-        </div>
-
-        <div>
-          <h2>12</h2>
-          <p>Pending Verifications</p>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="icon blue">
-          <i class="fa-solid fa-wallet"></i>
-        </div>
-
-        <div>
-          <h2>8</h2>
-          <p>Pending Disbursements</p>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="icon green">
-          <i class="fa-solid fa-circle-check"></i>
-        </div>
-
-        <div>
-          <h2>56</h2>
-          <p>Active Cases</p>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="icon purple">
-          <i class="fa-solid fa-users"></i>
-        </div>
-
-        <div>
-          <h2>28</h2>
-          <p>Completed Cases</p>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- Pending Verifications -->
-    <section class="dashboard-section">
-
-      <div class="section-header">
-        <h2>Pending Verifications</h2>
-        <a href="#">View All</a>
-      </div>
-
-      <div class="verification-list">
-
-        <div class="verification-card">
-
-          <div class="user-info">
-            <img src="https://i.pravatar.cc/50?img=11" alt="">
-
-            <div>
-              <h3>Jane Doe</h3>
-              <p>Medical Assistance</p>
-            </div>
+      <section class="stats-grid">
+        <div class="stat-card">
+          <div class="icon yellow"><i class="fa-solid fa-shield"></i></div>
+          <div>
+            <h2 id="statPendingVerifications">—</h2>
+            <p>Pending Verifications</p>
           </div>
-
-          <div class="time">
-            Submitted 2 hours ago
-          </div>
-
-          <div class="actions">
-            <button class="review-btn">Review</button>
-            <button class="reject-btn">Reject</button>
-          </div>
-
         </div>
-
-        <div class="verification-card">
-
-          <div class="user-info">
-            <img src="https://i.pravatar.cc/50?img=12" alt="">
-
-            <div>
-              <h3>Peter Okello</h3>
-              <p>School Fees Support</p>
-            </div>
+        <div class="stat-card">
+          <div class="icon blue"><i class="fa-solid fa-wallet"></i></div>
+          <div>
+            <h2 id="statPendingDisbursements">—</h2>
+            <p>Pending Disbursements</p>
           </div>
-
-          <div class="time">
-            Submitted 4 hours ago
-          </div>
-
-          <div class="actions">
-            <button class="review-btn">Review</button>
-            <button class="reject-btn">Reject</button>
-          </div>
-
         </div>
-
-        <div class="verification-card">
-
-          <div class="user-info">
-            <img src="https://i.pravatar.cc/50?img=13" alt="">
-
-            <div>
-              <h3>Grace Akinyi</h3>
-              <p>Emergency Shelter</p>
-            </div>
+        <div class="stat-card">
+          <div class="icon green"><i class="fa-solid fa-circle-check"></i></div>
+          <div>
+            <h2 id="statActiveCases">—</h2>
+            <p>Active Cases</p>
           </div>
-
-          <div class="time">
-            Submitted 6 hours ago
-          </div>
-
-          <div class="actions">
-            <button class="review-btn">Review</button>
-            <button class="reject-btn">Reject</button>
-          </div>
-
         </div>
+        <div class="stat-card">
+          <div class="icon purple"><i class="fa-solid fa-users"></i></div>
+          <div>
+            <h2 id="statCompletedCases">—</h2>
+            <p>Completed Cases</p>
+          </div>
+        </div>
+      </section>
 
-      </div>
+      <section class="dashboard-section">
+        <div class="section-header">
+          <h2>Pending Verifications</h2>
+          <a href="#" onclick="switchSection('verifications')">View All</a>
+        </div>
+        <div class="verification-list" id="verificationList">
+          <p style="padding:16px;color:#718096;">Loading...</p>
+        </div>
+      </section>
 
-    </section>
+      <section class="dashboard-section">
+        <div class="section-header">
+          <h2>Recent Disbursements</h2>
+          <a href="#" onclick="switchSection('disbursements')">View All</a>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Donor</th>
+              <th>Case</th>
+              <th>Amount</th>
+              <th>Transaction Hash</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="disbursementsBody">
+            <tr>
+              <td colspan="5" style="text-align:center;padding:16px;color:#718096;">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
 
-    <!-- Recent Disbursements -->
-    <section class="dashboard-section">
+    </div>
 
-      <div class="section-header">
-        <h2>Recent Disbursements</h2>
-        <a href="#">View All</a>
-      </div>
+    <!-- ========================= -->
+    <!-- VERIFICATIONS SECTION    -->
+    <!-- ========================= -->
+    <div id="section-verifications" class="section-page">
+      <section class="dashboard-section">
+        <div class="section-header">
+          <h2>All Pending Verifications</h2>
+        </div>
+        <div class="verification-list" id="verificationListFull">
+          <p style="padding:16px;color:#718096;">Loading...</p>
+        </div>
+      </section>
+    </div>
 
-      <table>
+    <!-- ========================= -->
+    <!-- DONATIONS SECTION        -->
+    <!-- ========================= -->
+    <div id="section-donations" class="section-page">
+      <section class="dashboard-section">
+        <div class="section-header">
+          <h2>All Donations</h2>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Donor</th>
+              <th>Case</th>
+              <th>Amount</th>
+              <th>Transaction Hash</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="donationsBody">
+            <tr>
+              <td colspan="6" style="text-align:center;padding:16px;color:#718096;">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
 
-        <thead>
-          <tr>
-            <th>Beneficiary</th>
-            <th>Purpose</th>
-            <th>Amount</th>
-            <th>Transaction Hash</th>
-            <th>Status</th>
-          </tr>
-        </thead>
+    <!-- ========================= -->
+    <!-- DISBURSEMENTS SECTION    -->
+    <!-- ========================= -->
+    <div id="section-disbursements" class="section-page">
+      <section class="dashboard-section">
+        <div class="section-header">
+          <h2>All Disbursements</h2>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Donor</th>
+              <th>Case</th>
+              <th>Amount</th>
+              <th>Transaction Hash</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="disbursementsBodyFull">
+            <tr>
+              <td colspan="5" style="text-align:center;padding:16px;color:#718096;">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
 
-        <tbody>
+    <!-- ========================= -->
+    <!-- BENEFICIARIES SECTION    -->
+    <!-- ========================= -->
+    <div id="section-beneficiaries" class="section-page">
+      <section class="dashboard-section">
+        <div class="section-header">
+          <h2>Beneficiaries</h2>
+        </div>
+        <p style="padding:16px;color:#718096;">Beneficiary management coming soon.</p>
+      </section>
+    </div>
 
-          <tr>
-            <td>Mercy Achieng</td>
-            <td>School Fees</td>
-            <td>$560</td>
-            <td>0x7b3b...9c2d</td>
-            <td>
-              <span class="success">
-                <i class="fa-solid fa-circle-check"></i>
-              </span>
-            </td>
-          </tr>
-
-          <tr>
-            <td>John Otieno</td>
-            <td>Surgery</td>
-            <td>$1200</td>
-            <td>0x8e2a...1f3d</td>
-            <td>
-              <span class="success">
-                <i class="fa-solid fa-circle-check"></i>
-              </span>
-            </td>
-          </tr>
-
-        </tbody>
-
-      </table>
-
-    </section>
+    <!-- ========================= -->
+    <!-- SETTINGS SECTION         -->
+    <!-- ========================= -->
+    <div id="section-settings" class="section-page">
+      <section class="dashboard-section">
+        <div class="section-header">
+          <h2>Settings</h2>
+        </div>
+        <p style="padding:16px;color:#718096;">Settings coming soon.</p>
+      </section>
+    </div>
 
   </main>
+
+  <script>
+
+    // =========================
+    // ADMIN NAME
+    // =========================
+    const adminName = localStorage.getItem("user_name");
+    if (adminName) document.getElementById("adminName").textContent = adminName;
+
+    // =========================
+    // SIDEBAR NAVIGATION
+    // =========================
+    const pageTitles = {
+      dashboard:      { title: "Admin Dashboard",   subtitle: "Manage cases, verifications and disbursements." },
+      verifications:  { title: "Verifications",     subtitle: "Review and approve pending cases." },
+      donations:      { title: "Donations",         subtitle: "Track all incoming donations." },
+      disbursements:  { title: "Disbursements",     subtitle: "Monitor fund disbursements." },
+      beneficiaries:  { title: "Beneficiaries",     subtitle: "Manage registered beneficiaries." },
+      settings:       { title: "Settings",          subtitle: "Configure platform settings." },
+    };
+
+    function switchSection(name) {
+      // hide all sections
+      document.querySelectorAll(".section-page").forEach(s => s.classList.remove("active"));
+      document.querySelectorAll(".nav-links li").forEach(l => l.classList.remove("active"));
+
+      // show target
+      document.getElementById("section-" + name).classList.add("active");
+      document.querySelector(`[data-section="${name}"]`).classList.add("active");
+
+      // update topbar
+      const meta = pageTitles[name];
+      document.getElementById("pageTitle").textContent    = meta.title;
+      document.getElementById("pageSubtitle").textContent = meta.subtitle;
+
+      // lazy load section data
+      if (name === "verifications") loadVerificationsFull();
+      if (name === "donations")     loadDonations();
+      if (name === "disbursements") loadDisbursementsFull();
+    }
+
+    document.querySelectorAll(".nav-links li").forEach(li => {
+      li.addEventListener("click", () => switchSection(li.dataset.section));
+    });
+
+    // =========================
+    // LOAD STATS
+    // =========================
+    async function loadStats() {
+      try {
+        const res  = await fetch("/api/admin/stats");
+        const data = await res.json();
+        document.getElementById("statPendingVerifications").textContent = data.pending_verifications;
+        document.getElementById("statPendingDisbursements").textContent = data.pending_disbursements;
+        document.getElementById("statActiveCases").textContent          = data.active_cases;
+        document.getElementById("statCompletedCases").textContent       = data.completed_cases;
+      } catch (err) {
+        console.error("Failed to load stats:", err);
+      }
+    }
+
+    // =========================
+    // VERIFICATION CARD HTML
+    // =========================
+    function verificationCard(v, targetId) {
+      const timeAgo = timeSince(new Date(v.created_at));
+      return `
+      <div class="verification-card">
+        <div class="user-info">
+          <img src="https://i.pravatar.cc/50?u=${v.id}" alt="">
+          <div>
+            <h3>${v.name}</h3>
+            <p>${v.title} — ${v.category}</p>
+          </div>
+        </div>
+        <div class="time">Submitted ${timeAgo}</div>
+        <div class="actions">
+          <button class="review-btn" onclick="verifyCase('${v.id}', 'approve', '${targetId}')">Approve</button>
+          <button class="reject-btn" onclick="verifyCase('${v.id}', 'reject',  '${targetId}')">Reject</button>
+        </div>
+      </div>`;
+    }
+
+    // =========================
+    // LOAD VERIFICATIONS (dashboard preview)
+    // =========================
+    async function loadVerifications() {
+      try {
+        const res  = await fetch("/api/admin/verifications");
+        const list = await res.json();
+        const container = document.getElementById("verificationList");
+        container.innerHTML = "";
+        if (!list || list.length === 0) {
+          container.innerHTML = `<p style="padding:16px;color:#718096;">No pending verifications.</p>`;
+          return;
+        }
+        list.forEach(v => { container.innerHTML += verificationCard(v, "verificationList"); });
+      } catch (err) {
+        document.getElementById("verificationList").innerHTML =
+          `<p style="padding:16px;color:red;">Failed to load verifications.</p>`;
+      }
+    }
+
+    // =========================
+    // LOAD VERIFICATIONS FULL PAGE
+    // =========================
+    async function loadVerificationsFull() {
+      try {
+        const res  = await fetch("/api/admin/verifications");
+        const list = await res.json();
+        const container = document.getElementById("verificationListFull");
+        container.innerHTML = "";
+        if (!list || list.length === 0) {
+          container.innerHTML = `<p style="padding:16px;color:#718096;">No pending verifications.</p>`;
+          return;
+        }
+        list.forEach(v => { container.innerHTML += verificationCard(v, "verificationListFull"); });
+      } catch (err) {
+        document.getElementById("verificationListFull").innerHTML =
+          `<p style="padding:16px;color:red;">Failed to load verifications.</p>`;
+      }
+    }
+
+    // =========================
+    // LOAD DISBURSEMENTS (dashboard preview)
+    // =========================
+    async function loadDisbursements() {
+      try {
+        const res  = await fetch("/api/admin/disbursements");
+        const list = await res.json();
+        const tbody = document.getElementById("disbursementsBody");
+        tbody.innerHTML = "";
+        if (!list || list.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:16px;color:#718096;">No disbursements yet.</td></tr>`;
+          return;
+        }
+        list.forEach(d => { tbody.innerHTML += disbursementRow(d); });
+      } catch (err) {
+        document.getElementById("disbursementsBody").innerHTML =
+          `<tr><td colspan="5" style="text-align:center;color:red;">Failed to load disbursements.</td></tr>`;
+      }
+    }
+
+    // =========================
+    // LOAD DISBURSEMENTS FULL PAGE
+    // =========================
+    async function loadDisbursementsFull() {
+      try {
+        const res  = await fetch("/api/admin/disbursements");
+        const list = await res.json();
+        const tbody = document.getElementById("disbursementsBodyFull");
+        tbody.innerHTML = "";
+        if (!list || list.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:16px;color:#718096;">No disbursements yet.</td></tr>`;
+          return;
+        }
+        list.forEach(d => { tbody.innerHTML += disbursementRow(d); });
+      } catch (err) {
+        document.getElementById("disbursementsBodyFull").innerHTML =
+          `<tr><td colspan="5" style="text-align:center;color:red;">Failed to load disbursements.</td></tr>`;
+      }
+    }
+
+    // =========================
+    // LOAD DONATIONS FULL PAGE
+    // =========================
+    async function loadDonations() {
+      try {
+        const res  = await fetch("/api/admin/disbursements");
+        const list = await res.json();
+        const tbody = document.getElementById("donationsBody");
+        tbody.innerHTML = "";
+        if (!list || list.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:16px;color:#718096;">No donations yet.</td></tr>`;
+          return;
+        }
+        list.forEach(d => {
+          const statusBadge = d.status === "confirmed"
+            ? `<span style="color:green;"><i class="fa-solid fa-circle-check"></i> Confirmed</span>`
+            : `<span style="color:#f59e0b;">${d.status}</span>`;
+          tbody.innerHTML += `
+          <tr>
+            <td>${d.donor_name}</td>
+            <td>${d.case_title}</td>
+            <td>Kshs ${Number(d.amount).toLocaleString()}</td>
+            <td>${d.transaction_hash}</td>
+            <td>${statusBadge}</td>
+            <td>${new Date(d.donated_at).toLocaleDateString()}</td>
+          </tr>`;
+        });
+      } catch (err) {
+        document.getElementById("donationsBody").innerHTML =
+          `<tr><td colspan="6" style="text-align:center;color:red;">Failed to load donations.</td></tr>`;
+      }
+    }
+
+    // =========================
+    // DISBURSEMENT ROW HTML
+    // =========================
+    function disbursementRow(d) {
+      const statusIcon = d.status === "confirmed"
+        ? `<span class="success"><i class="fa-solid fa-circle-check"></i></span>`
+        : `<span style="color:#f59e0b;">${d.status}</span>`;
+      return `
+      <tr>
+        <td>${d.donor_name}</td>
+        <td>${d.case_title}</td>
+        <td>Kshs ${Number(d.amount).toLocaleString()}</td>
+        <td>${d.transaction_hash}</td>
+        <td>${statusIcon}</td>
+      </tr>`;
+    }
+
+    // =========================
+    // APPROVE / REJECT CASE
+    // =========================
+    async function verifyCase(caseId, action, containerId) {
+      const btn = event.target;
+      btn.disabled    = true;
+      btn.textContent = "Processing...";
+      try {
+        const res  = await fetch("/api/admin/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ case_id: caseId, action })
+        });
+        const data = await res.json();
+        if (data.status === "success") {
+          loadStats();
+          loadVerifications();
+          if (containerId === "verificationListFull") loadVerificationsFull();
+        } else {
+          alert("Action failed: " + (data.message || "Unknown error"));
+          btn.disabled    = false;
+          btn.textContent = action === "approve" ? "Approve" : "Reject";
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Server error");
+        btn.disabled = false;
+      }
+    }
+
+    // =========================
+    // HELPER: TIME AGO
+    // =========================
+    function timeSince(date) {
+      const seconds = Math.floor((new Date() - date) / 1000);
+      if (seconds < 60)    return "just now";
+      if (seconds < 3600)  return Math.floor(seconds / 60) + " minutes ago";
+      if (seconds < 86400) return Math.floor(seconds / 3600) + " hours ago";
+      return Math.floor(seconds / 86400) + " days ago";
+    }
+
+    // =========================
+    // INIT
+    // =========================
+    loadStats();
+    loadVerifications();
+    loadDisbursements();
+
+  </script>
 
 </body>
 </html>

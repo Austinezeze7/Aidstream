@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -193,4 +194,141 @@ func LoginUser(email, password string) (map[string]interface{}, error) {
 		"role":       role,
 		"first_name": firstName,
 	}, nil
+}
+// =========================
+// ADMIN STATS
+// =========================
+func GetAdminStats() (map[string]interface{}, error) {
+	stats := map[string]interface{}{}
+
+	// Pending verifications (cases awaiting review)
+	var pendingVerifications int
+	DB.QueryRow(context.Background(),
+		`SELECT COUNT(*) FROM cases WHERE status = 'pending'`,
+	).Scan(&pendingVerifications)
+
+	// Pending disbursements
+	var pendingDisbursements int
+	DB.QueryRow(context.Background(),
+		`SELECT COUNT(*) FROM donations WHERE status = 'pending'`,
+	).Scan(&pendingDisbursements)
+
+	// Active cases
+	var activeCases int
+	DB.QueryRow(context.Background(),
+		`SELECT COUNT(*) FROM cases WHERE status = 'active'`,
+	).Scan(&activeCases)
+
+	// Completed cases
+	var completedCases int
+	DB.QueryRow(context.Background(),
+		`SELECT COUNT(*) FROM cases WHERE status = 'closed'`,
+	).Scan(&completedCases)
+
+	stats["pending_verifications"] = pendingVerifications
+	stats["pending_disbursements"] = pendingDisbursements
+	stats["active_cases"]          = activeCases
+	stats["completed_cases"]       = completedCases
+
+	return stats, nil
+}
+
+// =========================
+// PENDING VERIFICATIONS
+// =========================
+func GetPendingVerifications() ([]map[string]interface{}, error) {
+	rows, err := DB.Query(context.Background(),
+		`SELECT c.id, c.title, c.category, c.created_at,
+		        u.first_name, u.last_name
+		 FROM cases c
+		 LEFT JOIN users u ON c.created_by = u.id
+		 WHERE c.status = 'pending'
+		 ORDER BY c.created_at DESC
+		 LIMIT 10`,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("query failed: %v", err)
+	}
+	defer rows.Close()
+
+	var list []map[string]interface{}
+	for rows.Next() {
+		var id, title string
+		var category, firstName, lastName *string
+		var createdAt time.Time  // ← time.Time not string
+
+		err := rows.Scan(&id, &title, &category, &createdAt, &firstName, &lastName)
+		if err != nil {
+			return nil, fmt.Errorf("scan failed: %v", err)
+		}
+
+		name := "Unknown"
+		if firstName != nil && lastName != nil {
+			name = *firstName + " " + *lastName
+		}
+
+		cat := ""
+		if category != nil {
+			cat = *category
+		}
+
+		list = append(list, map[string]interface{}{
+			"id":         id,
+			"title":      title,
+			"category":   cat,
+			"created_at": createdAt.Format(time.RFC3339),  // ← format to string
+			"name":       name,
+		})
+	}
+	return list, nil
+}
+
+// =========================
+// RECENT DISBURSEMENTS
+// =========================
+func GetRecentDisbursements() ([]map[string]interface{}, error) {
+	rows, err := DB.Query(context.Background(),
+		`SELECT d.id, d.amount, d.status, d.donated_at,
+		        COALESCE(d.transaction_hash, 'N/A'),
+		        c.title,
+		        u.first_name, u.last_name
+		 FROM donations d
+		 LEFT JOIN cases c ON d.case_id = c.id
+		 LEFT JOIN users u ON d.donor_id = u.id
+		 ORDER BY d.donated_at DESC
+		 LIMIT 10`,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("query failed: %v", err)
+	}
+	defer rows.Close()
+
+	var list []map[string]interface{}
+	for rows.Next() {
+		var id, status, txHash, caseTitle string
+		var amount float64
+		var donatedAt time.Time  // ← time.Time not string
+		var firstName, lastName *string
+
+		err := rows.Scan(&id, &amount, &status, &donatedAt, &txHash, &caseTitle, &firstName, &lastName)
+		if err != nil {
+			return nil, fmt.Errorf("scan failed: %v", err)
+		}
+
+		name := "Anonymous"
+		if firstName != nil && lastName != nil {
+			name = *firstName + " " + *lastName
+		}
+
+		list = append(list, map[string]interface{}{
+			"id":               id,
+			"amount":           amount,
+			"status":           status,
+			"donated_at":       donatedAt.Format(time.RFC3339),  // ← format to string
+			"transaction_hash": txHash,
+			"case_title":       caseTitle,
+			"donor_name":       name,
+		})
+	}
+	return list, nil
 }
