@@ -8,11 +8,11 @@
  * - Escrow.sol
  * - VerificationRegistry.sol
  *
- * Network:
- * - Local Hardhat
- * - Polygon Amoy Testnet
- *
  * Usage:
+ * Local:
+ * npx hardhat run scripts/deploy.js
+ *
+ * Polygon Amoy:
  * npx hardhat run scripts/deploy.js --network polygonAmoy
  */
 
@@ -24,7 +24,9 @@ async function main() {
     console.log("🚀 Starting AidStream Contract Deployment...");
     console.log("================================================\n");
 
+    // =====================================================
     // GET DEPLOYER ACCOUNT
+    // =====================================================
 
     const [deployer] = await hre.ethers.getSigners();
 
@@ -38,7 +40,7 @@ async function main() {
     console.log(
         "Account balance:",
         hre.ethers.formatEther(balance),
-        "ETH\n"
+        "POL\n"
     );
 
     // =====================================================
@@ -53,6 +55,8 @@ async function main() {
 
     const aidStream = await AidStream.deploy();
 
+    // FIX:
+    // waitForDeployment() MUST be awaited before using contract
     await aidStream.waitForDeployment();
 
     const aidStreamAddress = await aidStream.getAddress();
@@ -86,7 +90,7 @@ async function main() {
     );
 
     // =====================================================
-    // DEPLOY VERIFICATION REGISTRY
+    // DEPLOY VERIFICATION REGISTRY CONTRACT
     // =====================================================
 
     console.log("📦 Deploying VerificationRegistry contract...");
@@ -111,6 +115,56 @@ async function main() {
     );
 
     // =====================================================
+    // OPTIONAL INITIAL SETUP
+    // =====================================================
+
+    console.log("⚙️ Running initial setup...\n");
+
+    /*
+     * Example:
+     * Add deployer as validator in AidStream
+     */
+
+    const tx1 = await aidStream.addValidator(
+        deployer.address
+    );
+
+    await tx1.wait();
+
+    console.log(
+        "✅ Added deployer as AidStream validator"
+    );
+
+    /*
+     * Add deployer as validator in Escrow
+     */
+
+    const tx2 = await escrow.addValidator(
+        deployer.address
+    );
+
+    await tx2.wait();
+
+    console.log(
+        "✅ Added deployer as Escrow validator"
+    );
+
+    /*
+     * Add deployer as validator in VerificationRegistry
+     */
+
+    const tx3 =
+        await verificationRegistry.addValidator(
+            deployer.address
+        );
+
+    await tx3.wait();
+
+    console.log(
+        "✅ Added deployer as VerificationRegistry validator\n"
+    );
+
+    // =====================================================
     // DEPLOYMENT SUMMARY
     // =====================================================
 
@@ -120,23 +174,47 @@ async function main() {
 
     console.log("📌 Contract Addresses:\n");
 
-    console.log("AidStream:", aidStreamAddress);
+    console.log("AidStream:");
+    console.log(aidStreamAddress, "\n");
 
-    console.log("Escrow:", escrowAddress);
+    console.log("Escrow:");
+    console.log(escrowAddress, "\n");
+
+    console.log("VerificationRegistry:");
+    console.log(verificationRegistryAddress, "\n");
+
+    console.log("================================================");
+
+    // =====================================================
+    // FRONTEND ENV VARIABLES
+    // =====================================================
+
+    console.log("\n📄 Copy these into your frontend .env file:\n");
 
     console.log(
-        "VerificationRegistry:",
-        verificationRegistryAddress
+        `NEXT_PUBLIC_AIDSTREAM_ADDRESS=${aidStreamAddress}`
+    );
+
+    console.log(
+        `NEXT_PUBLIC_ESCROW_ADDRESS=${escrowAddress}`
+    );
+
+    console.log(
+        `NEXT_PUBLIC_VERIFICATION_REGISTRY_ADDRESS=${verificationRegistryAddress}`
     );
 
     console.log("\n================================================");
 }
 
+// =========================================================
 // ERROR HANDLING
+// =========================================================
 
 main().catch((error) => {
 
-    console.error("❌ Deployment failed:", error);
+    console.error("\n❌ Deployment failed:\n");
+
+    console.error(error);
 
     process.exitCode = 1;
 });
