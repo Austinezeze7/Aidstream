@@ -332,3 +332,21 @@ func GetRecentDisbursements() ([]map[string]interface{}, error) {
 	}
 	return list, nil
 }
+func CreateCase(title, description, category string, targetAmount float64, createdBy string) error {
+	var createdByParam interface{}
+	if createdBy == "" {
+		createdByParam = nil
+	} else {
+		createdByParam = createdBy
+	}
+
+	_, err := DB.Exec(context.Background(),
+		`INSERT INTO cases (title, description, category, target_amount, status, created_by)
+		 VALUES ($1, $2, $3, $4, 'pending', $5)`,
+		title, description, category, targetAmount, createdByParam,
+	)
+	if err != nil {
+		return fmt.Errorf("insert failed: %v", err)
+	}
+	return nil
+}

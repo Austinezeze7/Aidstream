@@ -277,6 +277,44 @@ func main() {
 		}
 		fmt.Fprint(w, `{"status":"success"}`)
 	})
+	http.HandleFunc("/api/cases/create", func(w http.ResponseWriter, r *http.Request) {
+    w.Header().Set("Content-Type", "application/json")
+    if r.Method != http.MethodPost {
+        http.Error(w, "POST only", http.StatusMethodNotAllowed)
+        return
+    }
+
+    var body struct {
+        Title        string  `json:"title"`
+        Description  string  `json:"description"`
+        Category     string  `json:"category"`
+        TargetAmount float64 `json:"target_amount"`
+    }
+
+    if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+        w.WriteHeader(http.StatusBadRequest)
+        fmt.Fprint(w, `{"status":"error","message":"Invalid request"}`)
+        return
+    }
+
+    if body.Title == "" || body.Description == "" || body.TargetAmount <= 0 {
+        w.WriteHeader(http.StatusBadRequest)
+        fmt.Fprint(w, `{"status":"error","message":"Missing required fields"}`)
+        return
+    }
+
+    createdBy := r.Header.Get("X-User-ID")
+
+    err := utils.CreateCase(body.Title, body.Description, body.Category, body.TargetAmount, createdBy)
+    if err != nil {
+        log.Println("CreateCase error:", err)
+        w.WriteHeader(http.StatusInternalServerError)
+        fmt.Fprintf(w, `{"status":"error","message":"Could not submit request: %s"}`, err.Error())
+        return
+    }
+
+    fmt.Fprint(w, `{"status":"success","message":"Request submitted for review"}`)
+})
 
 	// =========================
 	// START SERVER
