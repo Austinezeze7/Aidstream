@@ -108,3 +108,69 @@ func GetCases() ([]map[string]interface{}, error) {
 
 	return cases, nil
 }
+func GetCaseByID(id string) (map[string]interface{}, error) {
+    row := DB.QueryRow(context.Background(),
+        `SELECT id, title, description, category, target_amount, amount_raised, status
+         FROM cases WHERE id = $1`, id,
+    )
+
+    var caseID, title, description, status string
+    var category *string
+    var targetAmount, amountRaised float64
+
+    err := row.Scan(&caseID, &title, &description, &category, &targetAmount, &amountRaised, &status)
+    if err != nil {
+        return nil, fmt.Errorf("case not found: %v", err)
+    }
+
+    c := map[string]interface{}{
+        "id":            caseID,
+        "title":         title,
+        "description":   description,
+        "category":      "",
+        "target_amount": targetAmount,
+        "amount_raised": amountRaised,
+        "status":        status,
+    }
+    if category != nil {
+        c["category"] = *category
+    }
+
+    return c, nil
+}
+func CreateDonation(caseID, donorID, paymentMethod string, amount float64) error {
+	tx, err := DB.Begin(context.Background())
+	if err != nil {
+		return fmt.Errorf("could not start transaction: %v", err)
+	}
+	defer tx.Rollback(context.Background())
+
+	// donorID can be empty — store as NULL if so
+	var donorParam interface{}
+	if donorID == "" {
+		donorParam = nil
+	} else {
+		donorParam = donorID
+	}
+
+	// Insert into donations — status defaults to 'pending'
+	_, err = tx.Exec(context.Background(),
+		`INSERT INTO donations (case_id, donor_id, amount, status)
+		 VALUES ($1, $2, $3, 'pending')`,
+		caseID, donorParam, amount,
+	)
+	if err != nil {
+		return fmt.Errorf("donation insert failed: %v", err)
+	}
+
+	// Update amount_raised on the case
+	_, err = tx.Exec(context.Background(),
+		`UPDATE cases SET amount_raised = amount_raised + $1 WHERE id = $2`,
+		amount, caseID,
+	)
+	if err != nil {
+		return fmt.Errorf("case update failed: %v", err)
+	}
+
+	return tx.Commit(context.Background())
+}

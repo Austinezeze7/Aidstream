@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 
 	"Aidstream/backend/utils"
 )
@@ -89,16 +90,51 @@ func main() {
 
 
 	http.HandleFunc("/api/donate", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		if r.Method != http.MethodPost {
-			http.Error(w, "Only POST allowed", http.StatusMethodNotAllowed)
-			return
-		}
-		json.NewEncoder(w).Encode(map[string]string{
-			"status":  "success",
-			"message": "Backend working",
-		})
-	})
+    w.Header().Set("Content-Type", "application/json")
+    if r.Method != http.MethodPost {
+        http.Error(w, "POST only", http.StatusMethodNotAllowed)
+        return
+    }
+
+    var body struct {
+        CaseID        string  `json:"case_id"`
+        Amount        float64 `json:"amount"`
+        PaymentMethod string  `json:"payment_method"`
+    }
+
+    if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+        w.WriteHeader(http.StatusBadRequest)
+        fmt.Fprint(w, `{"status":"error","message":"Invalid request"}`)
+        return
+    }
+
+    if body.CaseID == "" || body.Amount <= 0 {
+        w.WriteHeader(http.StatusBadRequest)
+        fmt.Fprint(w, `{"status":"error","message":"Missing case ID or amount"}`)
+        return
+    }
+
+    // get logged in user from localStorage — anonymous for now
+    donorID := r.Header.Get("X-User-ID")
+
+    err := utils.CreateDonation(body.CaseID, donorID, body.PaymentMethod, body.Amount)
+    if err != nil {
+        log.Println("CreateDonation error:", err)
+        w.WriteHeader(http.StatusInternalServerError)
+        fmt.Fprintf(w, `{"status":"error","message":"Donation failed: %s"}`, err.Error())
+        return
+    }
+
+    // return updated case so frontend can refresh the bar
+    updated, err := utils.GetCaseByID(body.CaseID)
+    if err != nil {
+        fmt.Fprint(w, `{"status":"success"}`)
+        return
+    }
+
+    updated["status"] = "success"
+    json.NewEncoder(w).Encode(updated)
+})
 
 	http.HandleFunc("/api/cases", func(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Content-Type", "application/json")
@@ -121,6 +157,31 @@ func main() {
     }
 
     json.NewEncoder(w).Encode(cases)
+})
+http.HandleFunc("/api/cases/", func(w http.ResponseWriter, r *http.Request) {
+    w.Header().Set("Content-Type", "application/json")
+    if r.Method != http.MethodGet {
+        http.Error(w, "GET only", http.StatusMethodNotAllowed)
+        return
+    }
+
+    // extract id from /api/cases/some-uuid
+    id := strings.TrimPrefix(r.URL.Path, "/api/cases/")
+    if id == "" {
+        w.WriteHeader(http.StatusBadRequest)
+        fmt.Fprint(w, `{"status":"error","message":"Missing case ID"}`)
+        return
+    }
+
+    c, err := utils.GetCaseByID(id)
+    if err != nil {
+        log.Println("GetCaseByID error:", err)
+        w.WriteHeader(http.StatusNotFound)
+        fmt.Fprint(w, `{"status":"error","message":"Case not found"}`)
+        return
+    }
+
+    json.NewEncoder(w).Encode(c)
 })
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
