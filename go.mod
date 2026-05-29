@@ -1,6 +1,6 @@
 module Aidstream
 
-go 1.25.0
+go 1.23.10
 
 require (
 	github.com/jackc/pgx/v5 v5.9.2
