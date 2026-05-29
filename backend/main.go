@@ -24,21 +24,43 @@ func main() {
 
 
 	http.HandleFunc("/api/login", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		if r.Method != http.MethodPost {
-			http.Error(w, "POST only", http.StatusMethodNotAllowed)
-			return
-		}
-		var data struct {
-			Email    string `json:"email"`
-			Password string `json:"password"`
-		}
-		_ = json.NewDecoder(r.Body).Decode(&data)
-		json.NewEncoder(w).Encode(map[string]string{
-			"status": "success",
-		})
-	})
+    w.Header().Set("Content-Type", "application/json")
+    if r.Method != http.MethodPost {
+        http.Error(w, "POST only", http.StatusMethodNotAllowed)
+        return
+    }
 
+    var body struct {
+        Email    string `json:"email"`
+        Password string `json:"password"`
+    }
+
+    if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+        w.WriteHeader(http.StatusBadRequest)
+        fmt.Fprint(w, `{"status":"error","message":"Invalid request"}`)
+        return
+    }
+
+    if body.Email == "" || body.Password == "" {
+        w.WriteHeader(http.StatusBadRequest)
+        fmt.Fprint(w, `{"status":"error","message":"Email and password required"}`)
+        return
+    }
+
+    user, err := utils.LoginUser(body.Email, body.Password)
+    if err != nil {
+        log.Println("LoginUser error:", err)
+        w.WriteHeader(http.StatusUnauthorized)
+        fmt.Fprint(w, `{"status":"error","message":"Invalid email or password"}`)
+        return
+    }
+
+    w.WriteHeader(http.StatusOK)
+    json.NewEncoder(w).Encode(map[string]interface{}{
+        "status": "success",
+        "user":   user,
+    })
+})
 
 	http.HandleFunc("/api/register", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodPost {

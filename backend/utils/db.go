@@ -174,3 +174,23 @@ func CreateDonation(caseID, donorID, paymentMethod string, amount float64) error
 
 	return tx.Commit(context.Background())
 }
+func LoginUser(email, password string) (map[string]interface{}, error) {
+	row := DB.QueryRow(context.Background(),
+		`SELECT id, email, role, first_name FROM users 
+		 WHERE email = $1 AND password = $2`,
+		email, password,
+	)
+
+	var id, userEmail, role, firstName string
+	err := row.Scan(&id, &userEmail, &role, &firstName)
+	if err != nil {
+		return nil, fmt.Errorf("invalid email or password")
+	}
+
+	return map[string]interface{}{
+		"id":         id,
+		"email":      userEmail,
+		"role":       role,
+		"first_name": firstName,
+	}, nil
+}
